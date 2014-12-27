@@ -27,13 +27,13 @@ import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.adonax.simplexNoiseVisualizer.MixerModel;
-import com.adonax.simplexNoiseVisualizer.OctaveModel;
-import com.adonax.simplexNoiseVisualizer.TextureModel;
-import com.adonax.simplexNoiseVisualizer.TopPanelModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import com.adonax.simplexNoiseVisualizer.color.ColorAxis;
 import com.adonax.simplexNoiseVisualizer.color.ColorBarPeg;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
 import com.adonax.simplexNoiseVisualizer.gradients.LinearGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.RadialGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.SinusoidalGradientFunction;
@@ -54,7 +54,7 @@ public class SolarFlareCard extends JPanel
 		add(navigater);
 		
 		// Title graphic
-		TopPanelModel settings = new TopPanelModel(4, 700, 160, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(4, 700, 160, 6);
 	
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -75,14 +75,14 @@ public class SolarFlareCard extends JPanel
 		
 		RadialGradientFunction radialGradient = 
 				new RadialGradientFunction(
-						settings.finalWidth / 2, 
-						settings.finalHeight / 2,
-						settings.finalWidth / 2,
+						settings.width / 2,
+						settings.height / 2,
+						settings.width / 2,
 						1, -0.5f);
 		boolean[] selected = new boolean[settings.octaves];
 		selected[1] = true;
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				new LinearGradientFunction(), radialGradient,
 				new SinusoidalGradientFunction(), selected);
 		
@@ -95,8 +95,8 @@ public class SolarFlareCard extends JPanel
 				MixerModel.MapMethod.CLAMP, radialGradient,
 				settings);
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);

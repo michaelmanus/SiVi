@@ -17,7 +17,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.adonax.simplexNoiseVisualizer.animation.AnimationPanel;
 import com.adonax.simplexNoiseVisualizer.color.ColorAxis;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import com.adonax.simplexNoiseVisualizer.tutorial.TutorialFramework;
 
 
@@ -26,7 +30,7 @@ public class MenuBar
 	private TopPanel topPanel;
 	
 	private JMenuItem exportGIF, exportPNG, exportJPG;
-	
+
 	MenuBar(TopPanel topPanel)
 	{
 		this.topPanel = topPanel;
@@ -44,8 +48,8 @@ public class MenuBar
 			@Override
 			public void actionPerformed(ActionEvent arg0)
 			{
-				TopPanelModel settings = new TopPanelModel();
-				OctaveModel[] octaves = 
+				GlobalConfiguration settings = GlobalConfiguration.inst();
+				OctaveModel[] octaves =
 						new OctaveModel[settings.octaves];
 				for (int i = 0; i < settings.octaves; i++)
 				{
@@ -53,14 +57,14 @@ public class MenuBar
 				}
 				MixerModel mixer = new MixerModel(settings);
 				ColorAxis colorAxis = new ColorAxis();
-				TextureModel sivi = new TextureModel(settings, octaves,
-						mixer, new GradientGUIModel(), colorAxis);
+				GUITextureModel sivi = new GUITextureModel(settings, octaves,
+						mixer, new GradientModel(), colorAxis);
 
 				topPanel.setAppSettings(sivi.appSettings);
 				topPanel.loadOctavesPanel(sivi.octaveModels);
 				topPanel.updateMixerGUI(new MixerGUI(
 						topPanel, sivi.mixerModel, 
-						new GradientGUIModel()));	
+						new GradientModel()));
 				topPanel.colorMapGUI.setColorAxis(0, sivi.colorAxis);
 				topPanel.colorMapGUI.setSelected(0, false);
 				topPanel.updateFinalDisplay(

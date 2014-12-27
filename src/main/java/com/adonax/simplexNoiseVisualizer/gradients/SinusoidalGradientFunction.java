@@ -1,6 +1,6 @@
 package com.adonax.simplexNoiseVisualizer.gradients;
 
-import com.adonax.simplexNoiseVisualizer.MixerGUI;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 
 public class SinusoidalGradientFunction implements GradientFunction
 {
@@ -19,7 +19,7 @@ public class SinusoidalGradientFunction implements GradientFunction
 	
 	public SinusoidalGradientFunction()
 	{
-		this(0, 0, MixerGUI.topPanel.getAppSettings().finalWidth/4, 
+		this(0, 0, GlobalConfiguration.inst().width /4,
 				0, 0.5f, 0);
 	}
 	
@@ -63,8 +63,8 @@ public class SinusoidalGradientFunction implements GradientFunction
 	
 	public void dump()
 	{
-		dump(0, 0, MixerGUI.topPanel.getAppSettings().finalWidth, 
-				MixerGUI.topPanel.getAppSettings().finalHeight);
+		dump(0, 0, GlobalConfiguration.inst().width,
+				GlobalConfiguration.inst().height);
 	}
 	
 	public void dump(int x0, int y0, int x1, int y1)

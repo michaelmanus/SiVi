@@ -10,10 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.adonax.simplexNoiseVisualizer.gradients.GradientGUI;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
 import com.adonax.simplexNoiseVisualizer.gradients.LinearGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.RadialGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.SinusoidalGradientFunction;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 
 public class SettingsPanel extends JPanel
 {
@@ -24,7 +28,7 @@ public class SettingsPanel extends JPanel
 	
 	SettingsPanel(final TopPanel topPanel)
 	{
-		TopPanelModel settings = topPanel.getAppSettings();
+		GlobalConfiguration settings = topPanel.getAppSettings();
 		
 		JLabel octavesLbl = new JLabel("Octaves");
 		final JTextField octaves = new JTextField(
@@ -39,14 +43,14 @@ public class SettingsPanel extends JPanel
 				 * existing octaves where possible.
 				 */
 				int octaveChannels = Integer.valueOf(octaves.getText()); 
-				TopPanelModel model = topPanel.getAppSettings();
-				model = TopPanelModel.setAppSetting(model, 
-						TopPanelModel.Fields.OCTAVES, 
+				GlobalConfiguration model = topPanel.getAppSettings();
+				model = GlobalConfiguration.setAppSetting(model,
+						GlobalConfiguration.Fields.OCTAVES,
 						octaveChannels);
 				topPanel.setAppSettings(model);
 				
 				MixerModel mm = topPanel.mixerGUI.getMixerModel();
-				GradientGUIModel ggm = 
+				GradientModel ggm =
 						topPanel.mixerGUI.getGradientGUI().getModel();
 						
 				float[] weights = mm.weights;
@@ -76,7 +80,7 @@ public class SettingsPanel extends JPanel
 		
 		JLabel widthLbl = new JLabel("Width");
 		final JTextField widthSetting = new JTextField(5);
-		widthSetting.setText(String.valueOf(settings.finalWidth));
+		widthSetting.setText(String.valueOf(settings.width));
 		widthSetting.addActionListener(new ActionListener()
 		{
 			@Override
@@ -87,10 +91,10 @@ public class SettingsPanel extends JPanel
 				int newWidth = 
 						Integer.valueOf(widthSetting.getText());
 				
-				TopPanelModel newSettings = 
-						TopPanelModel.setAppSetting(
-								topPanel.getAppSettings(), 
-								TopPanelModel.Fields.FINAL_WIDTH, 
+				GlobalConfiguration newSettings =
+						GlobalConfiguration.setAppSetting(
+								topPanel.getAppSettings(),
+								GlobalConfiguration.Fields.FINAL_WIDTH,
 								newWidth);
 				
 				rebuildWithNewSizeSettings(topPanel, newSettings);
@@ -99,7 +103,7 @@ public class SettingsPanel extends JPanel
 		
 		JLabel heightLbl = new JLabel("Height");
 		final JTextField heightSetting = new JTextField(5);
-		heightSetting.setText(String.valueOf(settings.finalHeight));
+		heightSetting.setText(String.valueOf(settings.height));
 		heightSetting.addActionListener(new ActionListener()
 		{
 			@Override
@@ -110,10 +114,10 @@ public class SettingsPanel extends JPanel
 				int newHeight = 
 						Integer.valueOf(heightSetting.getText());
 				
-				TopPanelModel newSettings = 
-						TopPanelModel.setAppSetting(
-								topPanel.getAppSettings(), 
-								TopPanelModel.Fields.FINAL_HEIGHT, 
+				GlobalConfiguration newSettings =
+						GlobalConfiguration.setAppSetting(
+								topPanel.getAppSettings(),
+								GlobalConfiguration.Fields.FINAL_HEIGHT,
 								newHeight);
 
 				rebuildWithNewSizeSettings(topPanel, newSettings);
@@ -172,24 +176,24 @@ public class SettingsPanel extends JPanel
 		
 	}
 	
-	private GradientGUIModel reviseGradientGUIModel(
-			GradientGUIModel ggm, 
-			TopPanelModel oldMSettings, TopPanelModel newSettings)
+	private GradientModel reviseGradientGUIModel(
+			GradientModel ggm,
+			GlobalConfiguration oldMSettings, GlobalConfiguration newSettings)
 	{
 		
 		LinearGradientFunction oldLGF = 
 				(LinearGradientFunction)ggm.gradients[0];
 		
 		LinearGradientFunction newLGF = new LinearGradientFunction(
-				newSettings.finalWidth, newSettings.finalHeight,
+				newSettings.width, newSettings.height,
 				oldLGF.xLeft, oldLGF.xRight,
 				oldLGF.yTop, oldLGF.yBottom);
 		
 		RadialGradientFunction oldRGF = 
 				(RadialGradientFunction)ggm.gradients[1];
 		
-		float widthScaling = newSettings.finalWidth / (float)oldMSettings.finalWidth; 
-		float heightScaling = newSettings.finalHeight / (float)oldMSettings.finalHeight;
+		float widthScaling = newSettings.width / (float)oldMSettings.width;
+		float heightScaling = newSettings.height / (float)oldMSettings.height;
 		
 		// or should we leave 'center point' at same abs location?
 		RadialGradientFunction newRGF = new RadialGradientFunction(
@@ -208,15 +212,15 @@ public class SettingsPanel extends JPanel
 						oldSGF.period, oldSGF.theta,
 						oldSGF.highVal,	oldSGF.lowVal);
 		
-		return new GradientGUIModel(
+		return new GradientModel(
 				newLGF, newRGF, newSGF, ggm.selected);
 	}
 	
 	private void rebuildWithNewSizeSettings(TopPanel topPanel, 
-			TopPanelModel newSettings)
+			GlobalConfiguration newSettings)
 	{
 		// General note: color not affected, thus ignored.
-		OctaveModel[] octaveModels = 
+		OctaveModel[] octaveModels =
 				new OctaveModel[newSettings.octaves];
 		for (int i = 0; i < newSettings.octaves; i++)
 		{
@@ -224,7 +228,7 @@ public class SettingsPanel extends JPanel
 					topPanel.octaveGUIs[i].getOctaveModel();
 		}
 
-		GradientGUIModel gradientGUIModel = 
+		GradientModel gradientModel =
 				reviseGradientGUIModel(
 					topPanel.mixerGUI.getGradientGUI().getModel(),
 					topPanel.getAppSettings(), 
@@ -232,9 +236,9 @@ public class SettingsPanel extends JPanel
 
 		NoiseData gradientData = 
 				GradientGUI.createGradientFunctionData(
-						newSettings.finalWidth,
-						newSettings.finalHeight,
-						gradientGUIModel);
+						newSettings.width,
+						newSettings.height,
+						gradientModel);
 		
 		MixerModel newMixerModel = 
 				MixerModel.updateMixSetting(
@@ -242,18 +246,18 @@ public class SettingsPanel extends JPanel
 						MixerModel.Fields.GRADIENT_DATA, 
 						gradientData);
 		
-		TextureModel sivi = new TextureModel(
+		GUITextureModel sivi = new GUITextureModel(
 				newSettings, 
 				octaveModels, 
-				newMixerModel, 
-				gradientGUIModel, 
+				newMixerModel,
+				gradientModel,
 				null);
 		
 		topPanel.setAppSettings(sivi.appSettings);
 		topPanel.loadOctavesPanel(sivi.octaveModels);
 		topPanel.updateMixerGUI(new MixerGUI(
 				topPanel, sivi.mixerModel, 
-				sivi.gradientGUIModel));	
+				sivi.gradientModel));
 		topPanel.updateFinalDisplay(
 				new FinalDisplay(sivi.appSettings));
 		

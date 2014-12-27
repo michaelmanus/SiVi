@@ -1,6 +1,11 @@
-package com.adonax.simplexNoiseVisualizer.gradients;
+package com.adonax.simplexNoiseVisualizer.models;
 
-public class GradientGUIModel
+import com.adonax.simplexNoiseVisualizer.gradients.GradientFunction;
+import com.adonax.simplexNoiseVisualizer.gradients.LinearGradientFunction;
+import com.adonax.simplexNoiseVisualizer.gradients.RadialGradientFunction;
+import com.adonax.simplexNoiseVisualizer.gradients.SinusoidalGradientFunction;
+
+public class GradientModel
 {
 	public final GradientFunction[] gradients;
 		public final boolean[] selected;
@@ -12,7 +17,7 @@ public class GradientGUIModel
 		SELECTED
 	}
 	
-	public GradientGUIModel()
+	public GradientModel()
 	{	
 		gradients = new GradientFunction[3];
 		gradients[0] = new LinearGradientFunction();
@@ -22,10 +27,10 @@ public class GradientGUIModel
 		selected = new boolean[3];
 	}
 	
-	public GradientGUIModel(LinearGradientFunction linearGradient,
-			RadialGradientFunction radialGradient,
-			SinusoidalGradientFunction sinusoidalGradient,
-			boolean[] selected)
+	public GradientModel(LinearGradientFunction linearGradient,
+						 RadialGradientFunction radialGradient,
+						 SinusoidalGradientFunction sinusoidalGradient,
+						 boolean[] selected)
 	{	
 		gradients = new GradientFunction[3];
 		gradients[0] = linearGradient;
@@ -35,9 +40,9 @@ public class GradientGUIModel
 		this.selected = selected;
 	}
 
-	static public GradientGUIModel updateGradientGUIModel(
-			GradientGUIModel model, 
-			GradientGUIModel.Fields field, Object value)
+	static public GradientModel updateGradientGUIModel(
+			GradientModel model,
+			GradientModel.Fields field, Object value)
 	{
 		LinearGradientFunction linear = 
 				(LinearGradientFunction)model.gradients[0]; 
@@ -56,6 +61,6 @@ public class GradientGUIModel
 		case SELECTED: selected = (boolean[])value;
 		}
 		
-		return new GradientGUIModel(linear, radial, sinusoidal, selected);
+		return new GradientModel(linear, radial, sinusoidal, selected);
 	}
 }

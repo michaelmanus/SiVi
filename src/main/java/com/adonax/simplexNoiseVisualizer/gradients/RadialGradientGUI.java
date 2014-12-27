@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,8 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
-
-import com.adonax.simplexNoiseVisualizer.MixerGUI;
 
 public class RadialGradientGUI extends JPanel
 {
@@ -41,9 +39,9 @@ public class RadialGradientGUI extends JPanel
 		gbConstraints.anchor = GridBagConstraints.LINE_START;
 
 		JLabel xWidthLBL = new JLabel(" Horizontal width: " 
-				+ MixerGUI.topPanel.getAppSettings().finalWidth + "    " 
+				+ GlobalConfiguration.inst().width + "    "
 				+ " Vertical height: " 
-				+ MixerGUI.topPanel.getAppSettings().finalHeight + " ");
+				+ GlobalConfiguration.inst().height + " ");
 		xWidthLBL.setBorder(blackBorder);
 		xWidthLBL.setBackground(background);
 		xWidthLBL.setOpaque(true);

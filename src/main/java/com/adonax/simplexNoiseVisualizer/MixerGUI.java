@@ -14,7 +14,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.adonax.simplexNoiseVisualizer.gradients.GradientGUI;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
 
 public class MixerGUI extends JPanel
 {
@@ -44,11 +45,11 @@ public class MixerGUI extends JPanel
 	
 	public MixerGUI(final TopPanel topPanel, MixerModel mm)
 	{
-		this(topPanel, mm, new GradientGUIModel());
+		this(topPanel, mm, new GradientModel());
 	}
 	
 	public MixerGUI(final TopPanel topPanel, MixerModel mm, 
-			GradientGUIModel ggm)
+			GradientModel ggm)
 	{
 		MixerGUI.topPanel = topPanel;
 		this.mixerModel = mm;
@@ -244,8 +245,8 @@ public class MixerGUI extends JPanel
 	public void updateGradientNoiseData(float[] gradientNoiseData)
 	{
 		NoiseData nd = new NoiseData(
-				topPanel.getAppSettings().finalWidth,
-				topPanel.getAppSettings().finalHeight,
+				topPanel.getAppSettings().width,
+				topPanel.getAppSettings().height,
 				gradientNoiseData);
 		mixerModel = new MixerModel(mixerModel.weights,
 				mixerModel.master, mixerModel.mapping,	nd);

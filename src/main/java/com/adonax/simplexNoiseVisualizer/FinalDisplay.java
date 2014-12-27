@@ -17,6 +17,8 @@
  */
 package com.adonax.simplexNoiseVisualizer;
 
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -34,7 +36,7 @@ public class FinalDisplay extends JPanel
 		return image;
 	}
 		
-	public FinalDisplay(final TopPanelModel settings)
+	public FinalDisplay(final GlobalConfiguration settings)
 	{	
 		TitledBorder combineTitledBorder = 
 				BorderFactory.createTitledBorder(
@@ -53,8 +55,8 @@ public class FinalDisplay extends JPanel
 			
 			@Override
 			public Dimension getPreferredSize() {
-				return new Dimension(settings.finalWidth, 
-						settings.finalHeight);
+				return new Dimension(settings.width,
+						settings.height);
 			}
 		};
 		

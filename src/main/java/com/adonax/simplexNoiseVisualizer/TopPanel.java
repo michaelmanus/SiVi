@@ -23,10 +23,13 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 import com.adonax.simplexNoiseVisualizer.color.ColorMapSelectorGUI;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
 import com.adonax.simplexNoiseVisualizer.gradients.LinearGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.RadialGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.SinusoidalGradientFunction;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 
 //import com.adonax.texturebuilder.export.ExportFrame;
 
@@ -37,12 +40,12 @@ public class TopPanel extends JPanel
 	public static int XPIXELS = 256;
 	public static int YPIXELS = 256;
 	
-	private volatile TopPanelModel appSettings; 
-	public void setAppSettings(TopPanelModel tpm)
+	private volatile GlobalConfiguration appSettings;
+	public void setAppSettings(GlobalConfiguration tpm)
 	{
 		appSettings = tpm;
 	}
-	public TopPanelModel getAppSettings()
+	public GlobalConfiguration getAppSettings()
 	{
 		return appSettings;
 	}
@@ -61,32 +64,27 @@ public class TopPanel extends JPanel
 	
 	private OctaveModel[] octaveModels;
 	
-	
+
 	TopPanel()
-	{
-		this(new TopPanelModel());
-	}
-	
-	TopPanel(TopPanelModel topPanelModel)
 	{
 		setLayout(new BorderLayout());
 
-		appSettings = new TopPanelModel();
+		appSettings = GlobalConfiguration.inst();
 		
 		boolean[] selected = new boolean[appSettings.octaves];
-		mixerGUI = new MixerGUI(this, new MixerModel(appSettings), 
-				new GradientGUIModel(
+		mixerGUI = new MixerGUI(this, new MixerModel(appSettings),
+				new GradientModel(
 						new LinearGradientFunction(
-								appSettings.finalWidth, 
-								appSettings.finalHeight, 
+								appSettings.width,
+								appSettings.height,
 								0, 0.5f, 0, 0), 
 						new RadialGradientFunction(
-								appSettings.finalWidth/2, 
-								appSettings.finalHeight/2,
-								appSettings.finalWidth/2, 
+								appSettings.width /2,
+								appSettings.height /2,
+								appSettings.width /2,
 								0, 0.5f),
 						new SinusoidalGradientFunction(
-								0, 0, appSettings.finalWidth/4, 
+								0, 0, appSettings.width /4,
 								0, 0.5f, 0),
 						selected
 						));
@@ -127,8 +125,8 @@ public class TopPanel extends JPanel
 		centerPanel.add(finalDisplay);
 
 		finalDisplay.setPreferredSize(
-				new Dimension(appSettings.finalWidth + 16, 
-						appSettings.finalHeight + 36));
+				new Dimension(appSettings.width + 16,
+						appSettings.height + 36));
 
 		add(centerPanel, BorderLayout.CENTER);		
 		updateOctaveDisplays();
@@ -228,8 +226,8 @@ public class TopPanel extends JPanel
 			octaveModels[i] = octaveGUIs[i].getOctaveModel();
 		}
 		NoiseData noiseData = TextureFunctions.makeNoiseDataArray(
-				appSettings.finalWidth, 
-				appSettings.finalHeight, 
+				appSettings.width,
+				appSettings.height,
 				octaveModels, mixerGUI.getMixerModel());
 		
 		BufferedImage image = TextureFunctions.makeImage(

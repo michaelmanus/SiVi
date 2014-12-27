@@ -1,5 +1,6 @@
-package com.adonax.simplexNoiseVisualizer;
+package com.adonax.simplexNoiseVisualizer.models;
 
+import com.adonax.simplexNoiseVisualizer.NoiseData;
 import com.adonax.simplexNoiseVisualizer.gradients.GradientFunction;
 
 public class MixerModel
@@ -21,15 +22,15 @@ public class MixerModel
 	public final MapMethod mapping;
 	public final NoiseData gradientData;
 	
-	public MixerModel(TopPanelModel settings)
+	public MixerModel(GlobalConfiguration settings)
 	{
 		weights = new float[settings.octaves];
 		for (int i = 0; i < 4; i++) weights[i] = 0.25f;
 			
 		master = 1;
 		mapping = MapMethod.CLAMP;
-		gradientData = new NoiseData(settings.finalWidth, 
-				settings.finalHeight);
+		gradientData = new NoiseData(settings.width,
+				settings.height);
 	}
 	
 	public MixerModel(float[] weights, float master, MapMethod mapping, 
@@ -42,14 +43,14 @@ public class MixerModel
 	}
 
 	public MixerModel(float[] weights, float master, MapMethod mapping, 
-			GradientFunction gradientFunction, TopPanelModel settings)
+			GradientFunction gradientFunction, GlobalConfiguration settings)
 	{
 		this.weights = weights;
 		this.master = master;
 		this.mapping = mapping;
 
-		int width = settings.finalWidth;
-		int height = settings.finalHeight;
+		int width = settings.width;
+		int height = settings.height;
 		float[] gradientData  = new float[ width * height];
 		         
 		for (int j = 0; j < height; j++)

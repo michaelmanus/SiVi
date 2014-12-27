@@ -27,6 +27,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.event.*;
 
 import com.adonax.simplexNoiseVisualizer.color.ColorMapSelectorGUI;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
 
 public class OctaveGUI extends JPanel
 {

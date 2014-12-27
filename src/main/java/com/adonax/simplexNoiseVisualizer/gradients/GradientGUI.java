@@ -20,15 +20,17 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import com.adonax.simplexNoiseVisualizer.MixerGUI;
-import com.adonax.simplexNoiseVisualizer.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
 import com.adonax.simplexNoiseVisualizer.NoiseData;
 
 public class GradientGUI extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 
-	private GradientGUIModel model;
-	public GradientGUIModel getModel() { return model; }
+	private GradientModel model;
+	public GradientModel getModel() { return model; }
 
 	public static enum GradientMode {
 		LINEAR,
@@ -46,10 +48,10 @@ public class GradientGUI extends JPanel implements ActionListener
 	
 	public GradientGUI(MixerGUI mixerGUI)
 	{		
-		this(mixerGUI, new GradientGUIModel());
+		this(mixerGUI, new GradientModel());
 	}
 	
-	public GradientGUI(MixerGUI mixerGUI, GradientGUIModel model)
+	public GradientGUI(MixerGUI mixerGUI, GradientModel model)
 	{
 		this.mixerGUI = mixerGUI;
 		this.model = model;
@@ -149,19 +151,19 @@ public class GradientGUI extends JPanel implements ActionListener
 		switch (mode)
 		{
 		case LINEAR: 
-			model = GradientGUIModel.updateGradientGUIModel(
-					model, GradientGUIModel.Fields.LINEAR, gradientFunction);
+			model = GradientModel.updateGradientGUIModel(
+					model, GradientModel.Fields.LINEAR, gradientFunction);
 			break;
 			
 		case RADIAL: 
-			model = GradientGUIModel.updateGradientGUIModel(
-					model, GradientGUIModel.Fields.RADIAL,
+			model = GradientModel.updateGradientGUIModel(
+					model, GradientModel.Fields.RADIAL,
 					gradientFunction);
 			break;
 			
 		case SINUSOIDAL: 
-			model = GradientGUIModel.updateGradientGUIModel(
-					model, GradientGUIModel.Fields.SINUSOIDAL, 
+			model = GradientModel.updateGradientGUIModel(
+					model, GradientModel.Fields.SINUSOIDAL,
 					gradientFunction);
 			break;
 			
@@ -173,7 +175,7 @@ public class GradientGUI extends JPanel implements ActionListener
 	}
 	
 	static public NoiseData createGradientFunctionData(
-			int gradientWidth, int gradientHeight, GradientGUIModel ggm)
+			int gradientWidth, int gradientHeight, GradientModel ggm)
 	{
 		float[] noiseArray = new float[gradientWidth * gradientHeight];
 		int idx = 0;
@@ -204,8 +206,8 @@ public class GradientGUI extends JPanel implements ActionListener
 		{
 			selected[i] = gfCheckBoxes[i].isSelected();
 		}
-		model = GradientGUIModel.updateGradientGUIModel(
-					model, GradientGUIModel.Fields.SELECTED, selected);
+		model = GradientModel.updateGradientGUIModel(
+				model, GradientModel.Fields.SELECTED, selected);
 		
 		update();
 	}
@@ -214,8 +216,8 @@ public class GradientGUI extends JPanel implements ActionListener
 	{
 		NoiseData noiseData = 
 				GradientGUI.createGradientFunctionData(
-					MixerGUI.topPanel.getAppSettings().finalWidth,
-					MixerGUI.topPanel.getAppSettings().finalHeight,
+					GlobalConfiguration.inst().width,
+					GlobalConfiguration.inst().height,
 					model);
 		
 		mixerGUI.setMixerModel(MixerModel.updateMixSetting(

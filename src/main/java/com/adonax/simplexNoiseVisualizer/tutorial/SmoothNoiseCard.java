@@ -9,13 +9,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
-import com.adonax.simplexNoiseVisualizer.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
 import com.adonax.simplexNoiseVisualizer.NoiseData;
-import com.adonax.simplexNoiseVisualizer.OctaveModel;
-import com.adonax.simplexNoiseVisualizer.TextureModel;
-import com.adonax.simplexNoiseVisualizer.TopPanelModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import com.adonax.simplexNoiseVisualizer.color.ColorAxis;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
 
 
 public class SmoothNoiseCard extends JPanel
@@ -34,7 +34,7 @@ public class SmoothNoiseCard extends JPanel
 		add(navigater);
 		
 		// Title graphic
-		TopPanelModel settings = new TopPanelModel(1, 700, 160, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(1, 700, 160, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[1];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -44,13 +44,13 @@ public class SmoothNoiseCard extends JPanel
 		weights[0] = 1;
 		MixerModel mixerModel = new MixerModel(weights, 1, 
 				MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight)); 
+				new NoiseData(settings.width,
+						settings.height));
 		
 		ColorAxis colorAxis = new ColorAxis();
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 			
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);

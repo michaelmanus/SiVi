@@ -1,6 +1,5 @@
 package com.adonax.simplexNoiseVisualizer.gradients;
-
-import com.adonax.simplexNoiseVisualizer.MixerGUI;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 
 public class LinearGradientFunction implements GradientFunction
 {
@@ -15,11 +14,11 @@ public class LinearGradientFunction implements GradientFunction
 	
 	public final float xLeft, xRight, yTop, yBottom;
 	public final int functionWidth, functionHeight;
-	
+
 	public LinearGradientFunction()
 	{
-		this(MixerGUI.topPanel.getAppSettings().finalWidth, 
-				MixerGUI.topPanel.getAppSettings().finalHeight, 
+		this(GlobalConfiguration.inst().width,
+				GlobalConfiguration.inst().height,
 				0, 0.5f, 0, 0);
 	}
 	

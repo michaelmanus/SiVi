@@ -21,15 +21,15 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import com.adonax.simplexNoiseVisualizer.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
 import com.adonax.simplexNoiseVisualizer.NoiseData;
-import com.adonax.simplexNoiseVisualizer.OctaveModel;
-import com.adonax.simplexNoiseVisualizer.TextureModel;
-import com.adonax.simplexNoiseVisualizer.TopPanelModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import com.adonax.simplexNoiseVisualizer.color.ColorAxis;
 import com.adonax.simplexNoiseVisualizer.color.ColorBarPeg;
 import com.adonax.simplexNoiseVisualizer.gradients.GradientGUI;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
 import com.adonax.simplexNoiseVisualizer.gradients.LinearGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.RadialGradientFunction;
 import com.adonax.simplexNoiseVisualizer.gradients.SinusoidalGradientFunction;
@@ -58,8 +58,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeClassicCloud(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(5, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(5, 256, 256, 6);
 	
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -87,11 +87,11 @@ public class GalleryCard extends JPanel
 		weights[4] = 0.032258064f;
 		MixerModel mixerModel = new MixerModel(
 				weights, 1, MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight)); 
+				new NoiseData(settings.width,
+						settings.height));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -101,8 +101,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeCirrusCloud(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(4, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(4, 256, 256, 6);
 	
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(0.5f, 4, 0, 0, 
@@ -127,11 +127,11 @@ public class GalleryCard extends JPanel
 		weights[3] = 0.0625f;
 		MixerModel mixerModel = new MixerModel(
 				weights, 1, MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight)); 
+				new NoiseData(settings.width,
+						settings.height));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -141,8 +141,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makePerlinExampleCloud(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(7, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(7, 256, 256, 6);
 	
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(1, 1, 0, 0, 
@@ -170,13 +170,13 @@ public class GalleryCard extends JPanel
 
 		LinearGradientFunction linearGradient = 
 				new LinearGradientFunction(
-						settings.finalWidth, 
-						settings.finalHeight,
+						settings.width,
+						settings.height,
 						0, 0, -1f, 0.75f);
 		boolean[] selected = new boolean[3];
 		selected[0] = true;
 
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				linearGradient, new RadialGradientFunction(),
 				new SinusoidalGradientFunction(), selected);
 		
@@ -193,8 +193,8 @@ public class GalleryCard extends JPanel
 				weights, 1, MixerModel.MapMethod.CLAMP, 
 				linearGradient, settings); 
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -204,8 +204,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeSunsetCloud(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(5, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(5, 256, 256, 6);
 	
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -229,13 +229,13 @@ public class GalleryCard extends JPanel
 		
 		LinearGradientFunction linearGradient = 
 				new LinearGradientFunction(
-						settings.finalWidth, 
-						settings.finalHeight,
+						settings.width,
+						settings.height,
 						0, 0, 0.8f, -0.5f);
 		boolean[] selected = new boolean[3];
 		selected[0] = true;
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				linearGradient, new RadialGradientFunction(),
 				new SinusoidalGradientFunction(), selected);
 		
@@ -250,8 +250,8 @@ public class GalleryCard extends JPanel
 				weights, 1, MixerModel.MapMethod.CLAMP, 
 				linearGradient, settings); 
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -261,8 +261,8 @@ public class GalleryCard extends JPanel
 
 	TutorialDisplay makeTreeRings(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(1, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(1, 256, 256, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[1];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -272,8 +272,8 @@ public class GalleryCard extends JPanel
 		weights[0] = 1 * masterWeight;
 		MixerModel mixerModel = new MixerModel(weights, 
 				masterWeight, MixerModel.MapMethod.RING, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight)); 
+				new NoiseData(settings.width,
+						settings.height));
 		
 		ColorAxis colorAxis = new ColorAxis();
 		ArrayList<ColorBarPeg> colorBarPegs = new ArrayList<ColorBarPeg>();
@@ -282,8 +282,8 @@ public class GalleryCard extends JPanel
 		colorAxis.setColorBarPegs(colorBarPegs);
 
 		
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -293,8 +293,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeWoodGrain(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(1, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(1, 256, 256, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[1];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -311,7 +311,7 @@ public class GalleryCard extends JPanel
 		boolean[] selected = new boolean[3];
 		selected[2] = true;
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				new LinearGradientFunction(), new RadialGradientFunction(),
 				sinusoidalGradient, selected);
 		
@@ -322,8 +322,8 @@ public class GalleryCard extends JPanel
 				masterWeight, MixerModel.MapMethod.RING, 
 				sinusoidalGradient,	settings); 
 		
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -333,8 +333,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeCrayons(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(2, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(2, 256, 256, 6);
 
 		OctaveModel[] octaveModels = new OctaveModel[2];
 		octaveModels[0] = new OctaveModel(120, 120, 0, 0, 
@@ -353,11 +353,11 @@ public class GalleryCard extends JPanel
 		weights[1] = 0.25f;
 		MixerModel mixerModel = new MixerModel(
 				weights, 2, MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight));	
+				new NoiseData(settings.width,
+						settings.height));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -367,8 +367,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeTerraMap(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(7, 400, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(7, 400, 256, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(1, 1, 0, 0, 
@@ -411,11 +411,11 @@ public class GalleryCard extends JPanel
 		
 		MixerModel mixerModel = new MixerModel(weights, 
 				masterWeight, MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight));	
+				new NoiseData(settings.width,
+						settings.height));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -425,8 +425,8 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeTerraVeins(final TutorialFramework tf)
 	{
-		TopPanelModel settings = 
-				new TopPanelModel(1, 256, 256, 6);
+		GlobalConfiguration settings =
+				new GlobalConfiguration(1, 256, 256, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(4, 4, 0, 0, 
@@ -451,11 +451,11 @@ public class GalleryCard extends JPanel
 		
 		MixerModel mixerModel = new MixerModel(weights, 
 				masterWeight, MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight));	
+				new NoiseData(settings.width,
+						settings.height));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -468,7 +468,7 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makePlasmaField(final TutorialFramework tf)
 	{
-		TopPanelModel settings = new TopPanelModel(4, 255, 255, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(4, 255, 255, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -489,13 +489,13 @@ public class GalleryCard extends JPanel
 		
 		RadialGradientFunction radialGradient = 
 				new RadialGradientFunction(
-						settings.finalWidth / 2, 
-						settings.finalHeight / 2,
-						settings.finalWidth / 2,
+						settings.width / 2,
+						settings.height / 2,
+						settings.width / 2,
 						1, -0.6f);
 		boolean[] selected = new boolean[3];
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				new LinearGradientFunction(), radialGradient,
 				new SinusoidalGradientFunction(), selected);
 		
@@ -507,11 +507,11 @@ public class GalleryCard extends JPanel
 
 		MixerModel mixerModel = new MixerModel(
 				weights, 1, MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight));
+				new NoiseData(settings.width,
+						settings.height));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -521,7 +521,7 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeSolarFlare(final TutorialFramework tf)
 	{
-		TopPanelModel settings = new TopPanelModel(4, 350, 350, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(4, 350, 350, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(2, 2, 0, 0, 
@@ -543,14 +543,14 @@ public class GalleryCard extends JPanel
 		
 		RadialGradientFunction radialGradient = 
 				new RadialGradientFunction(
-						settings.finalWidth / 2, 
-						settings.finalHeight / 2,
-						settings.finalWidth / 2,
+						settings.width / 2,
+						settings.height / 2,
+						settings.width / 2,
 						1, -0.6f);
 		boolean[] selected = new boolean[3];
 		selected[1] = true;
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				new LinearGradientFunction(), radialGradient,
 				new SinusoidalGradientFunction(), selected);
 		
@@ -564,8 +564,8 @@ public class GalleryCard extends JPanel
 				weights, 1,	MixerModel.MapMethod.CLAMP, 
 				radialGradient,	settings);
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -575,7 +575,7 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeFieryFuzzball(final TutorialFramework tf)
 	{
-		TopPanelModel settings = new TopPanelModel(4, 350, 350, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(4, 350, 350, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(4, 16, 0, 0, 
@@ -596,14 +596,14 @@ public class GalleryCard extends JPanel
 		
 		RadialGradientFunction radialGradient = 
 				new RadialGradientFunction(
-						settings.finalWidth / 2, 
-						settings.finalHeight / 2,
-						settings.finalWidth / 2,
+						settings.width / 2,
+						settings.height / 2,
+						settings.width / 2,
 						1.2f, 0);
 		boolean[] selected = new boolean[3];
 		selected[1] = true;
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				new LinearGradientFunction(), radialGradient,
 				new SinusoidalGradientFunction(), selected);
 		
@@ -618,8 +618,8 @@ public class GalleryCard extends JPanel
 				masterWeight, MixerModel.MapMethod.CLAMP,
 				radialGradient,	settings);
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -629,7 +629,7 @@ public class GalleryCard extends JPanel
 
 	TutorialDisplay makeGoldFireThread(final TutorialFramework tf)
 	{
-		TopPanelModel settings = new TopPanelModel(4, 300, 300, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(4, 300, 300, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(8, 2, 0, 0, 
@@ -651,15 +651,15 @@ public class GalleryCard extends JPanel
 		
 		LinearGradientFunction linearGradient = 
 				new LinearGradientFunction(
-						settings.finalWidth, 
-						settings.finalHeight,
+						settings.width,
+						settings.height,
 						0, 0, 0, 0.75f);
 		
 		boolean[] selected = new boolean[3];
 		selected[0] = true;
 
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				linearGradient, new RadialGradientFunction(),
 				new SinusoidalGradientFunction(), selected);
 		
@@ -674,8 +674,8 @@ public class GalleryCard extends JPanel
 				masterWeight, MixerModel.MapMethod.CLAMP,
 				linearGradient,	settings);
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		
@@ -685,7 +685,7 @@ public class GalleryCard extends JPanel
 	
 	TutorialDisplay makeCandelabra(final TutorialFramework tf)
 	{
-		TopPanelModel settings = new TopPanelModel(4, 400, 400, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(4, 400, 400, 6);
 		
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(8, 2, 0, 0, 
@@ -707,14 +707,14 @@ public class GalleryCard extends JPanel
 		
 		LinearGradientFunction linearGradient = 
 				new LinearGradientFunction(
-						settings.finalWidth, 
-						settings.finalHeight,
+						settings.width,
+						settings.height,
 						0, 0, 1.1f, 0);
 		
 		RadialGradientFunction radialGradient = 
 				new RadialGradientFunction(
-						settings.finalWidth / 2, 
-						settings.finalHeight / 2,
+						settings.width / 2,
+						settings.height / 2,
 						236, 0, -0.5f);
 
 		SinusoidalGradientFunction sinusoidalGradient = 
@@ -726,7 +726,7 @@ public class GalleryCard extends JPanel
 			selected[i] = true;
 		}
 		
-		GradientGUIModel gradientGUIModel = new GradientGUIModel(
+		GradientModel gradientModel = new GradientModel(
 				linearGradient, radialGradient,
 				sinusoidalGradient, selected);
 		
@@ -740,12 +740,12 @@ public class GalleryCard extends JPanel
 		MixerModel mixerModel = new MixerModel(weights, 
 				masterWeight, MixerModel.MapMethod.CLAMP,
 				GradientGUI.createGradientFunctionData(
-						settings.finalWidth,
-						settings.finalHeight,
-						gradientGUIModel));
+						settings.width,
+						settings.height,
+						gradientModel));
 
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, gradientGUIModel, colorAxis);		
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, gradientModel, colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);		

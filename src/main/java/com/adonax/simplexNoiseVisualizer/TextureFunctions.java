@@ -21,6 +21,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 
 import com.adonax.simplexNoiseVisualizer.color.ColorMap;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
 import com.adonax.simplexNoiseVisualizer.utils.SimplexNoise;
 
 /**
@@ -43,7 +45,7 @@ public class TextureFunctions {
 	 * @return TextureData
 	 */
 	public static NoiseData makeNoiseDataArray(int width, 
-			int height, OctaveModel om) 
+			int height, OctaveModel om)
 	{
 
 		float[] noiseArray = new float[width * height];
@@ -89,7 +91,7 @@ public class TextureFunctions {
 	 * @return TextureData
 	 */
 	public static NoiseData makeNoiseDataArray(int width, int height, 
-			OctaveModel[] om, MixerModel mm) 
+			OctaveModel[] om, MixerModel mm)
 	{
 		return noiseDataMaker(width, height, om, mm, 0, 2);
 	}

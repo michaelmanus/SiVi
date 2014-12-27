@@ -14,7 +14,7 @@ import javax.swing.border.TitledBorder;
 import com.adonax.simplexNoiseVisualizer.FinalDisplay;
 import com.adonax.simplexNoiseVisualizer.MixerGUI;
 import com.adonax.simplexNoiseVisualizer.NoiseData;
-import com.adonax.simplexNoiseVisualizer.TextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
 import com.adonax.simplexNoiseVisualizer.TextureFunctions;
 import com.adonax.simplexNoiseVisualizer.TopPanel;
 
@@ -22,7 +22,7 @@ public class TutorialDisplay extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	
-	TutorialDisplay(final TextureModel sivi, final TopPanel topPanel)
+	TutorialDisplay(final GUITextureModel sivi, final TopPanel topPanel)
 	{
 		TitledBorder combineTitledBorder = 
 				BorderFactory.createTitledBorder(
@@ -30,8 +30,8 @@ public class TutorialDisplay extends JPanel
 		setBorder(combineTitledBorder);
 		NoiseData noiseData =  
 				TextureFunctions.makeNoiseDataArray(
-						sivi.appSettings.finalWidth, 
-						sivi.appSettings.finalHeight,
+						sivi.appSettings.width,
+						sivi.appSettings.height,
 						sivi.octaveModels,
 						sivi.mixerModel);
 		final BufferedImage image = TextureFunctions.makeImage(
@@ -82,7 +82,7 @@ public class TutorialDisplay extends JPanel
 				topPanel.setAppSettings(sivi.appSettings);
 				topPanel.loadOctavesPanel(sivi.octaveModels);
 				topPanel.updateMixerGUI(new MixerGUI(
-						topPanel, sivi.mixerModel, sivi.gradientGUIModel));	
+						topPanel, sivi.mixerModel, sivi.gradientModel));
 				topPanel.colorMapGUI.setColorAxis(0, sivi.colorAxis);
 				topPanel.colorMapGUI.setSelected(0, false);
 				topPanel.updateFinalDisplay(

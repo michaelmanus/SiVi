@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
-import com.adonax.simplexNoiseVisualizer.MixerGUI;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 
 public class SinusoidalGradientGUI extends JPanel
 {
@@ -44,9 +44,9 @@ public class SinusoidalGradientGUI extends JPanel
 		// FIRST ROW
 		
 		JLabel xWidthLBL = new JLabel(" Horizontal width: " 
-				+ MixerGUI.topPanel.getAppSettings().finalWidth + "    " 
+				+ GlobalConfiguration.inst().width + "    "
 				+ " Vertical height: " 
-				+ MixerGUI.topPanel.getAppSettings().finalHeight + " ");
+				+ GlobalConfiguration.inst().height + " ");
 		xWidthLBL.setBorder(blackBorder);
 		xWidthLBL.setBackground(background);
 		xWidthLBL.setOpaque(true);

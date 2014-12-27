@@ -32,12 +32,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.adonax.simplexNoiseVisualizer.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
 import com.adonax.simplexNoiseVisualizer.NoiseData;
-import com.adonax.simplexNoiseVisualizer.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
 import com.adonax.simplexNoiseVisualizer.TextureFunctions;
 import com.adonax.simplexNoiseVisualizer.TopPanel;
-import com.adonax.simplexNoiseVisualizer.TopPanelModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import com.adonax.simplexNoiseVisualizer.color.ColorMap;
 import com.adonax.simplexNoiseVisualizer.color.ColorMapSelectorGUI;
 import com.adonax.simplexNoiseVisualizer.utils.FloatArrayFunctions;
@@ -309,9 +309,9 @@ public class AnimationPanel extends JPanel
 	{
 		// initialize
 		float z = 0;
-		TopPanelModel tpm = topPanel.getAppSettings();
-		int imgWidth = tpm.finalWidth;
-		int imgHeight = tpm.finalHeight;
+		GlobalConfiguration tpm = topPanel.getAppSettings();
+		int imgWidth = tpm.width;
+		int imgHeight = tpm.height;
 		
 		int octaves = tpm.octaves;
 		OctaveModel[] om = new OctaveModel[octaves];

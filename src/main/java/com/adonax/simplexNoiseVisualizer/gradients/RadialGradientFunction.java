@@ -1,8 +1,7 @@
 package com.adonax.simplexNoiseVisualizer.gradients;
 
 import java.awt.Point;
-
-import com.adonax.simplexNoiseVisualizer.MixerGUI;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 
 public class RadialGradientFunction implements GradientFunction
 {
@@ -17,12 +16,12 @@ public class RadialGradientFunction implements GradientFunction
 	public final double radius;
 	public final float edgeVal, centerVal;
 	public final Point centerPoint;
-	
+
 	public RadialGradientFunction()
 	{
-		this(MixerGUI.topPanel.getAppSettings().finalWidth/2, 
-				MixerGUI.topPanel.getAppSettings().finalHeight/2,
-				MixerGUI.topPanel.getAppSettings().finalWidth/2, 
+		this(GlobalConfiguration.inst().width /2,
+				GlobalConfiguration.inst().height /2,
+				GlobalConfiguration.inst().width /2,
 				0, 0.5f);
 	}
 	
@@ -59,8 +58,8 @@ public class RadialGradientFunction implements GradientFunction
 	
 	public void dump()
 	{
-		dump(0, 0, MixerGUI.topPanel.getAppSettings().finalWidth, 
-				MixerGUI.topPanel.getAppSettings().finalHeight);
+		dump(0, 0, GlobalConfiguration.inst().width,
+				GlobalConfiguration.inst().height);
 	}
 	
 	public void dump(int x0, int y0, int x1, int y1)

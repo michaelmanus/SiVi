@@ -15,7 +15,7 @@
  *  License along with SiVi.  If not, see
  *  <http://www.gnu.org/licenses/>.
  */
-package com.adonax.simplexNoiseVisualizer;
+package com.adonax.simplexNoiseVisualizer.models;
 
 /**
  * Immutable class representing parameters for a single texture 

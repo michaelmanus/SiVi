@@ -29,14 +29,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.adonax.simplexNoiseVisualizer.MixerModel;
+import com.adonax.simplexNoiseVisualizer.models.MixerModel;
 import com.adonax.simplexNoiseVisualizer.NoiseData;
-import com.adonax.simplexNoiseVisualizer.OctaveModel;
-import com.adonax.simplexNoiseVisualizer.TextureModel;
-import com.adonax.simplexNoiseVisualizer.TopPanelModel;
+import com.adonax.simplexNoiseVisualizer.models.OctaveModel;
+import com.adonax.simplexNoiseVisualizer.models.GUITextureModel;
+import com.adonax.simplexNoiseVisualizer.models.GlobalConfiguration;
 import com.adonax.simplexNoiseVisualizer.color.ColorAxis;
 import com.adonax.simplexNoiseVisualizer.color.ColorBarPeg;
-import com.adonax.simplexNoiseVisualizer.gradients.GradientGUIModel;
+import com.adonax.simplexNoiseVisualizer.models.GradientModel;
 
 public class TitleCard extends JPanel 
 {
@@ -52,7 +52,7 @@ public class TitleCard extends JPanel
 		GridBagConstraints gbConstraints = new GridBagConstraints();
 		gbConstraints.anchor = GridBagConstraints.LINE_START;
 
-		TopPanelModel settings = new TopPanelModel(1, 700, 160, 6);
+		GlobalConfiguration settings = new GlobalConfiguration(1, 700, 160, 6);
 
 		OctaveModel[] octaveModels = new OctaveModel[settings.octaves];
 		octaveModels[0] = new OctaveModel(128, 4, 0, 0, 
@@ -68,11 +68,11 @@ public class TitleCard extends JPanel
 		weights[0] = 1.0f;
 		MixerModel mixerModel = new MixerModel(weights, 1, 
 				MixerModel.MapMethod.CLAMP, 
-				new NoiseData(settings.finalWidth, 
-						settings.finalHeight)); 
+				new NoiseData(settings.width,
+						settings.height));
 		
-		TextureModel sivi = new TextureModel(settings, octaveModels,
-				mixerModel, new GradientGUIModel(), colorAxis);
+		GUITextureModel sivi = new GUITextureModel(settings, octaveModels,
+				mixerModel, new GradientModel(), colorAxis);
 		
 		TutorialDisplay pageDisplay = new TutorialDisplay(
 				sivi, tf.topPanel);

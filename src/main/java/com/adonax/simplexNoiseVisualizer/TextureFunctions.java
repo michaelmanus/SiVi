@@ -30,7 +30,36 @@ import com.adonax.simplexNoiseVisualizer.utils.SimplexNoise;
  */
 public class TextureFunctions {
 
-	
+
+	public static NoiseData makeNoiseDataArray(int width,
+											   int height, OctaveModel om,
+											   float translateX, float translateY)
+	{
+		float[] noiseArray = new float[width * height];
+
+		for (int i = 0, n = width * height; i < n; i ++)
+		{
+			//TODO: build 256.0f into the OctaveModel "scale" factors
+			float y = (((i/width) % height) * om.yScale / 256.0f)
+					+ om.yTranslate + translateY;
+			float x = ((i % width) * om.xScale / 256.0f)
+					+ om.xTranslate + translateX;
+
+			float noiseVal = (float) SimplexNoise.noise(x, y);
+			noiseVal = Math.min(
+					Math.max(noiseVal, om.minClamp), om.maxClamp);
+
+			if (om.normalize == OctaveModel.NoiseNormalization.SMOOTH) {
+				noiseVal = (noiseVal + 1) / 2;
+			} else if (om.normalize == OctaveModel.NoiseNormalization.ABS) {
+				noiseVal = Math.abs(noiseVal);
+			}
+
+			noiseArray[i] = noiseVal;
+		}
+
+		return new NoiseData(width, height, noiseArray);
+	}
 	/**
 	 * Generate a 2D noise data array from a single octave channel
 	 * source. Noise data may or may not be normalized in this 
@@ -47,31 +76,7 @@ public class TextureFunctions {
 	public static NoiseData makeNoiseDataArray(int width, 
 			int height, OctaveModel om)
 	{
-
-		float[] noiseArray = new float[width * height];
-
-		for (int i = 0, n = width * height; i < n; i ++)
-		{
-			//TODO: build 256.0f into the OctaveModel "scale" factors
-			float y = (((i/width) % height) * om.yScale / 256.0f)  
-					+ om.yTranslate;
-			float x = ((i % width) * om.xScale / 256.0f)
-					+ om.xTranslate;
-
-			float noiseVal = (float) SimplexNoise.noise(x, y);
-			noiseVal = Math.min(
-					Math.max(noiseVal, om.minClamp), om.maxClamp);
-
-			if (om.normalize == OctaveModel.NoiseNormalization.SMOOTH) {
-				noiseVal = (noiseVal + 1) / 2;
-			} else if (om.normalize == OctaveModel.NoiseNormalization.ABS) {
-				noiseVal = Math.abs(noiseVal);
-			}
-			
-			noiseArray[i] = noiseVal;
-		}
-
-		return new NoiseData(width, height, noiseArray);
+		return TextureFunctions.makeNoiseDataArray(width, height, om, 0, 0);
 	}
 
 	/**
@@ -91,9 +96,15 @@ public class TextureFunctions {
 	 * @return TextureData
 	 */
 	public static NoiseData makeNoiseDataArray(int width, int height, 
-			OctaveModel[] om, MixerModel mm)
+			OctaveModel[] om, MixerModel mm, float translateX, float translateY)
 	{
-		return noiseDataMaker(width, height, om, mm, 0, 2);
+		return noiseDataMaker(width, height, om, mm, 0, 2, translateX, translateY);
+	}
+
+	public static NoiseData makeNoiseDataArray(int width, int height,
+											   OctaveModel[] om, MixerModel mm)
+	{
+		return noiseDataMaker(width, height, om, mm, 0, 2, 0, 0);
 	}
 
 	/**
@@ -116,12 +127,20 @@ public class TextureFunctions {
 	public static NoiseData makeNoiseDataArray(int width, int height, 
 			OctaveModel[] om, MixerModel mm, float z) 
 	{
-		return noiseDataMaker(width, height, om, mm, z, 3);
+		return noiseDataMaker(width, height, om, mm, z, 3, 0, 0);
 	}
-	
+
+	public static NoiseData makeNoiseDataArray(int width, int height,
+											   OctaveModel[] om,
+											   MixerModel mm, float z,
+											   float translateX, float translateY)
+	{
+		return noiseDataMaker(width, height, om, mm, z, 3, translateX, translateY);
+	}
 	// TODO: throw error if dims not 2 or 3?
 	private static NoiseData noiseDataMaker(int width, int height,
-			OctaveModel[] om, MixerModel mm, float z, int dimensions)
+			OctaveModel[] om, MixerModel mm, float z, int dimensions,
+			float translateX, float translateY)
 	{
 		float[] noiseArray = new float[width * height];
 		float x, y, noiseVal;
@@ -131,11 +150,11 @@ public class TextureFunctions {
 			for (int i = 0, n = width * height; i < n; i ++)
 			{
 				//TODO: build 256.0f into the OctaveModel "scale" factors
-				y = (((i/width) % height) * om[j].yScale / 256.0f)  
-						+ om[j].yTranslate;
+				y = (((i/width) % height) * om[j].yScale / 256.0f)
+						+ om[j].yTranslate + translateY;
 				x = ((i % width) * om[j].xScale / 256.0f)
-						+ om[j].xTranslate;
-	
+						+ om[j].xTranslate + translateX;
+
 				if (dimensions == 2) 
 				{
 					noiseVal = (float) SimplexNoise.noise(x, y);

@@ -67,13 +67,10 @@ public class TerraCard extends JPanel
 		ColorAxis colorAxis = new ColorAxis();
 		ArrayList<ColorBarPeg> colorBarPegs = new ArrayList<ColorBarPeg>();
 		colorBarPegs.add(new ColorBarPeg(0, 255, 255, 255, 255));
-		colorBarPegs.add(new ColorBarPeg(40, 153, 153, 153, 255));
-		colorBarPegs.add(new ColorBarPeg(64, 0, 128, 0, 255));
-		colorBarPegs.add(new ColorBarPeg(92, 96, 176, 0, 255));
-		colorBarPegs.add(new ColorBarPeg(99, 224, 224, 128, 255));
-		colorBarPegs.add(new ColorBarPeg(100, 204, 204, 204, 255));
-		colorBarPegs.add(new ColorBarPeg(128, 64, 64, 255, 255));
-		colorBarPegs.add(new ColorBarPeg(255, 0, 0, 192, 255));
+		colorBarPegs.add(new ColorBarPeg(120, 255, 255, 255, 255));
+
+		colorBarPegs.add(new ColorBarPeg(121, 0, 0, 0, 255));
+		colorBarPegs.add(new ColorBarPeg(255, 0, 0, 0, 255));
 		colorAxis.setColorBarPegs(colorBarPegs);
 		
 		float[] weights = new float[4];

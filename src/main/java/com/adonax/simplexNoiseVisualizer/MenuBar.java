@@ -137,7 +137,23 @@ public class MenuBar
 				
 		JMenuItem codeGeneratorSubMenu = 
 				new JMenuItem("Code Generator", KeyEvent.VK_C);
-		codeGeneratorSubMenu.setEnabled(false);
+		codeGeneratorSubMenu.setEnabled(true);
+		codeGeneratorSubMenu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String s = "";
+				int i = 0;
+				for(OctaveModel m : topPanel.octaveModels)
+				{
+					s += String.format("octaveModels[%d] = %s\n", i++, m.toCode());
+				}
+
+				s += topPanel.mixerGUI.mixerModel.toCode();
+
+				System.out.print(s);
+			}
+
+		});
 		
 		JMenuItem animatorPanel = new JMenuItem("Animation Tool", KeyEvent.VK_A);
 	    animatorPanel.addActionListener(new ActionListener()

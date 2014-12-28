@@ -26,7 +26,7 @@ public class MixerGUI extends JPanel
 	private JSlider[] weightSlider;
 	private JTextField[] weightTextField;
 	private JSlider masterSlider;
-	private volatile MixerModel mixerModel;
+	public volatile MixerModel mixerModel;
 	
 	private ButtonGroup colorMappingOptions;
 	private JRadioButton clampOption, ringOption;

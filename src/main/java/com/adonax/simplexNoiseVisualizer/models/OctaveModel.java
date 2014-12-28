@@ -110,5 +110,27 @@ public class OctaveModel {
 				normalize
 		);
 	}
-	
+
+	private String normToString()
+	{
+		if(normalize == NoiseNormalization.SMOOTH)
+		{
+			return "OctaveModel.NoiseNormalization.SMOOTH";
+
+		}
+		if(normalize == NoiseNormalization.ABS)
+		{
+			return "OctaveModel.NoiseNormalization.ABS";
+
+		}
+
+		return "OctaveModel.NoiseNormalization.NONE";
+
+	}
+	public String toCode()
+	{
+		return String.format("new OctaveModel(%ff, %ff, %ff, %ff, %ff, %ff, %s);",
+				xScale, yScale, xTranslate, yTranslate, minClamp, maxClamp, normToString());
+	}
+
 }

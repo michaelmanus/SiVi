@@ -21,14 +21,14 @@ public class TextureGenerator {
         configuration.height = height;
     }
 
-    public BufferedImage generate(TextureModel model)
+    public BufferedImage generate(TextureModel model, int translateX, int translateY)
     {
         NoiseData noiseData =
                 TextureFunctions.makeNoiseDataArray(
                         configuration.width,
                         configuration.height,
                         model.octaveModels,
-                        model.mixerModel);
+                        model.mixerModel, translateX, translateY);
 
         final BufferedImage image = TextureFunctions.makeImage(
             noiseData, model.mixerModel,

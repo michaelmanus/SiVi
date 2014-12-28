@@ -91,4 +91,19 @@ public class MixerModel
 				gradientData
 		);
 	}
+	private String weightsCode()
+	{
+		String weightStr = "";
+		int i=0;
+		for(float weight : weights)
+		{
+			weightStr += String.format("weights[%d] = %ff;\n", i++, weight);
+		}
+		return weightStr;
+	}
+
+	public String toCode()
+	{
+		return weightsCode() + String.format("Master: %f", master);
+	}
 }

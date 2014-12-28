@@ -62,7 +62,7 @@ public class TopPanel extends JPanel
 	}
 	private JScrollPane octaveScroll;
 	
-	private OctaveModel[] octaveModels;
+	public OctaveModel[] octaveModels;
 	
 
 	TopPanel()
